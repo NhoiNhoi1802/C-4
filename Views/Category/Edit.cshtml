@@ -1,0 +1,23 @@
+﻿@model Ếch_ăn_chay.Models.Category
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Sửa danh mục";
+}
+
+<h2>Sửa danh mục</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="CategoryId" />
+    <div class="mb-3">
+        <label class="form-label">Tên danh mục</label>
+        <input asp-for="CategoryName" class="form-control" />
+        <span asp-validation-for="CategoryName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Mô tả</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+    <a class="btn btn-secondary" href="@Url.Action("Index", "Category")">Hủy</a>
+</form>

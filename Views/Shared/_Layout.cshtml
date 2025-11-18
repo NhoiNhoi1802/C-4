@@ -1,0 +1,97 @@
+﻿@using Ếch_ăn_chay.Models
+@inject IHttpContextAccessor Context
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Ếch Ray Ăn Chay</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="@Url.Action("Index", "Home")">Ếch Ray Ăn Chay</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Home")">Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Products")">Sản phẩm</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Category")">Danh mục</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Cart")">Giỏ hàng</a>
+                        </li>
+
+                        @* Menu admin chỉ hiện với Admin *@
+                        @{
+                            var role = Context.HttpContext?.Session.GetString("Role");
+                        }
+                        @if (role == "Admin")
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown">
+                                    Admin
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+                                    <li><a class="dropdown-item" href="@Url.Action("Dashboard", "Admin")">Dashboard</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("Products", "Admin")">Quản lý sản phẩm</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("Categories", "Admin")">Quản lý danh mục</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("Orders", "Admin")">Quản lý đơn hàng</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("Users", "Admin")">Quản lý người dùng</a></li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+
+                    <ul class="navbar-nav">
+                        @{
+                            var fullName = Context.HttpContext?.Session.GetString("FullName");
+                        }
+                        @if (!string.IsNullOrEmpty(fullName))
+                        {
+                            <li class="nav-item">
+                                <span class="nav-link">Xin chào, @fullName</span>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Logout", "Auth")">Đăng xuất</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Login", "Auth")">Đăng nhập</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Register", "Auth")">Đăng ký</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-4">
+        @RenderBody()
+    </main>
+
+    <footer class="bg-light text-center py-3 mt-5 border-top">
+        <p>&copy; @DateTime.Now.Year Ếch Ray Ăn Chay. All rights reserved.</p>
+    </footer>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

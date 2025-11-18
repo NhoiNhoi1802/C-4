@@ -1,0 +1,46 @@
+﻿@using Ếch_ăn_chay.Models
+@inject IHttpContextAccessor Context
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Trang chủ";
+    var featuredProducts = ViewBag.FeaturedProducts as List<Product> ?? new List<Product>();
+    var categories = ViewBag.Categories as List<Category> ?? new List<Category>();
+}
+
+<div class="text-center mb-4">
+    <h1 class="display-4 fw-bold">Ếch Ăn Chay 🥬</h1>
+    <p class="lead">Trái cây tươi sạch, thực phẩm chay ngon lành, giao tận nơi</p>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <h3>Sản phẩm nổi bật</h3>
+        <div class="row row-cols-1 row-cols-md-3 g-3">
+            @foreach (var p in featuredProducts)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <img src="@p.ImageUrl" class="card-img-top" alt="@p.ProductName" style="height:150px; object-fit:cover;" />
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@p.ProductName</h5>
+                            <p class="card-text text-success fw-bold">@p.Price.ToString("C")</p>
+                            <a href="@Url.Action("Details", "Products", new { id = p.ProductId })" class="btn btn-sm btn-outline-success mt-auto">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <h3>Danh mục</h3>
+        <ul class="list-group">
+            @foreach (var c in categories)
+            {
+                <li class="list-group-item">
+                    <a href="@Url.Action("Index", "Products", new { categoryId = c.CategoryId })">@c.CategoryName</a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

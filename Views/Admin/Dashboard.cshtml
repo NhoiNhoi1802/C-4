@@ -1,0 +1,43 @@
+﻿@model Ếch_ăn_chay.Models.AdminDashboardViewModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Dashboard Admin";
+}
+
+<h2>Dashboard Admin</h2>
+
+<div class="row g-3">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Tổng sản phẩm</h5>
+                <p class="card-text">@Model.TotalProducts</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Tổng danh mục</h5>
+                <p class="card-text">@Model.TotalCategories</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Tổng đơn hàng</h5>
+                <p class="card-text">@Model.TotalOrders</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-danger mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Tổng người dùng</h5>
+                <p class="card-text">@Model.TotalUsers</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+﻿@model Ếch_ăn_chay.Models.Product
+
+@{
+    ViewData["Title"] = "Chi tiết sản phẩm";
+}
+
+<h2>@Model.ProductName</h2>
+
+<ul class="list-group mb-3">
+    <li class="list-group-item"><strong>Giá:</strong> @Model.Price</li>
+    <li class="list-group-item"><strong>Số lượng:</strong> @Model.Stock</li>
+    <li class="list-group-item"><strong>Danh mục:</strong> @Model.Category?.CategoryName</li>
+    <li class="list-group-item"><strong>Hình ảnh:</strong>
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img src="@Model.ImageUrl" width="200" />
+        }
+        else
+        {
+            <span>Không có ảnh</span>
+        }
+    </li>
+</ul>
+
+<a asp-action="Edit" asp-route-id="@Model.ProductId" class="btn btn-warning">Sửa</a>
+<a asp-action="Index" class="btn btn-secondary">Quay lại</a>

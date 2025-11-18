@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Ếch_ăn_chay.Models.Product>
+@using Microsoft.AspNetCore.Http
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Sản phẩm";
+
+    // Lấy query string
+    var searchName = Context.Request.Query["searchName"].ToString();
+    var minPriceStr = Context.Request.Query["minPrice"].ToString();
+    var maxPriceStr = Context.Request.Query["maxPrice"].ToString();
+
+    decimal.TryParse(minPriceStr, out var minPrice);
+    decimal.TryParse(maxPriceStr, out var maxPrice);
+
+    var filteredProducts = Model;
+
+    if (!string.IsNullOrWhiteSpace(searchName))
+    {
+        filteredProducts = filteredProducts.Where(p => p.ProductName.Contains(searchName, StringComparison.OrdinalIgnoreCase));
+    }
+    if (minPrice > 0)
+    {
+        filteredProducts = filteredProducts.Where(p => p.Price >= minPrice);
+    }
+    if (maxPrice > 0)
+    {
+        filteredProducts = filteredProducts.Where(p => p.Price <= maxPrice);
+    }
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="get" class="row g-3 mb-3">
+    <div class="col-md-4">
+        <input type="text" name="searchName" class="form-control" placeholder="Tìm theo tên" value="@searchName" />
+    </div>
+    <div class="col-md-3">
+        <input type="number" name="minPrice" class="form-control" placeholder="Giá từ" value="@minPriceStr" />
+    </div>
+    <div class="col-md-3">
+        <input type="number" name="maxPrice" class="form-control" placeholder="Giá đến" value="@maxPriceStr" />
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
+    </div>
+</form>
+
+@if (filteredProducts != null && filteredProducts.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Hình</th>
+                <th>Tên sản phẩm</th>
+                <th>Danh mục</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in filteredProducts)
+            {
+                <tr>
+                    <td>
+                        <img src="@p.ImageUrl ?? " /images/no-image.png"" alt="@p.ProductName" width="60" height="60" />
+                    </td>
+                    <td>@p.ProductName</td>
+                    <td>@(p.Category?.CategoryName ?? "Chưa có")</td>
+                    <td>@p.Price.ToString("C")</td>
+                    <td>@p.Stock @p.Unit</td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" href="@Url.Action("Edit", "Products", new { id = p.ProductId })">Sửa</a>
+                        <a class="btn btn-sm btn-danger" href="@Url.Action("Delete", "Products", new { id = p.ProductId })">Xóa</a>
+                        <a class="btn btn-sm btn-info" href="@Url.Action("Details", "Products", new { id = p.ProductId })">Xem</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Không tìm thấy sản phẩm nào.</p>
+}
+
+<a class="btn btn-success" href="@Url.Action("Create", "Products")">Thêm sản phẩm mới</a>

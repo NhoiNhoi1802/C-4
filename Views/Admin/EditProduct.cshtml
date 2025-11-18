@@ -1,0 +1,37 @@
+﻿@model Ếch_ăn_chay.Models.Product
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Thêm sản phẩm";
+}
+
+<h2>Thêm sản phẩm</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <input type="hidden" asp-for="ProductId" />
+        <label class="form-label">Tên sản phẩm</label>
+        <input asp-for="ProductName" class="form-control" />
+        <span asp-validation-for="ProductName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Giá</label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Số lượng</label>
+        <input asp-for="Stock" class="form-control" />
+        <span asp-validation-for="Stock" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Đơn vị</label>
+        <input asp-for="Unit" class="form-control" />
+        <span asp-validation-for="Unit" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Danh mục</label>
+        <select asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "Name"))" class="form-select"></select>
+    </div>
+    <button type="submit" class="btn btn-success">Cập Nhật</button>
+    <a class="btn btn-secondary" href="@Url.Action("Products", "Admin")">Hủy</a>
+</form>

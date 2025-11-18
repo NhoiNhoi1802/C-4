@@ -1,0 +1,39 @@
+﻿@model List<Order>
+@inject IHttpContextAccessor Context
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Đơn hàng";
+}
+
+<h2>Đơn hàng của bạn</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Chưa có đơn hàng nào</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead class="table-success">
+            <tr>
+                <th>Mã đơn</th>
+                <th>Ngày tạo</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.OrderId</td>
+                    <td>@order.Status</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="@Url.Action("Details", "Orders", new { id = order.OrderId })">Chi tiết</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

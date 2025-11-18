@@ -1,0 +1,43 @@
+﻿@model Ếch_ăn_chay.ViewModels.ProductViewModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Thêm sản phẩm";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label class="form-label">Tên sản phẩm</label>
+        <input asp-for="Product.ProductName" class="form-control" />
+        <span asp-validation-for="Product.ProductName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Giá</label>
+        <input asp-for="Product.Price" class="form-control" />
+        <span asp-validation-for="Product.Price" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Số lượng</label>
+        <input asp-for="Product.Stock" class="form-control" />
+        <span asp-validation-for="Product.Stock" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Danh mục</label>
+        <select asp-for="Product.CategoryId" class="form-select"
+                asp-items="@(new SelectList(Model.Categories, "CategoryId", "CategoryName"))">
+            <option value="">-- Chọn danh mục --</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Ảnh sản phẩm</label>
+        <input asp-for="ImageFile" type="file" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success">Lưu</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

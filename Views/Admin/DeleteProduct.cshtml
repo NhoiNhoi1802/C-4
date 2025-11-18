@@ -1,0 +1,17 @@
+﻿@model Ếch_ăn_chay.Models.Product
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Xóa sản phẩm";
+}
+
+<h2>Xác nhận xóa sản phẩm</h2>
+
+<div class="alert alert-warning">
+    Bạn có chắc muốn xóa sản phẩm: <strong>@Model.ProductName</strong>?
+</div>
+
+<form method="post" asp-action="DeleteProductConfirmed">
+    <input type="hidden" asp-for="ProductId" />
+    <button type="submit" class="btn btn-danger">Xóa</button>
+    <a class="btn btn-secondary" href="@Url.Action("Products", "Admin")">Hủy</a>
+</form>

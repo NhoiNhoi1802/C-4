@@ -1,0 +1,17 @@
+﻿@model Ếch_ăn_chay.Models.Category
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Xóa danh mục";
+}
+
+<h2>Xác nhận xóa danh mục</h2>
+
+<div class="alert alert-warning">
+    Bạn có chắc chắn muốn xóa danh mục: <strong>@Model.CategoryName </strong> ?
+</div>
+
+<form method="post" asp-action="DeleteConfirmed">
+    <input type="hidden" asp-for="CategoryId" />
+    <button type="submit" class="btn btn-danger">Xóa</button>
+    <a class="btn btn-secondary" href="@Url.Action("Index", "Category")">Hủy</a>
+</form>
